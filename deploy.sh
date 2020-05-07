@@ -1,32 +1,32 @@
 #!/usr/bin/env bash
 
+# set -x
+
 # Get started with Google Cloud Platform
+# core
+export PROJECT_NAME="${PROJECT_NAME:-project-name}"
+# compute
+export COMPUTE_REGION="${COMPUTE_REGION:-europe-west3}"
+export COMPUTE_ZONE="${COMPUTE_REGION:-europe-west3-a}"
+# app
+# export APP_INSTANCE_NAME="${APP_INSTANCE_NAME:-app}"
+# export APP_NAMESPACE="${APP_NAMESPACE:-publication}"
 
-cloud_project="publication-273509"
-cloud_region="europe-west3"
-cloud_zone="europe-west3-a"
+export APP_INSTANCE_NAME="wordpress"
+export APP_NAMESPACE="wordpress_namespace"
+export CLUSTER_MASTER_IP="35.234.99.88"
+export CLUSTER_NAME="cluster"
 
-# gcloud config set compute/zone ${cloud_zone}
-# gcloud config set compute/region ${cloud_region}
+# Configure default
+# gcloud config set project ${cloud_project}
+# gcloud config set compute/region ${COMPUTE_REGION}
+# gcloud config set compute/zone ${COMPUTE_ZONE}
+# gcloud config list
 
-# networks_load_balancer_ip="35.198.124.128"
-# networks_addresses="35.198.171.100"
-# networks_instance_ip="35.198.124.128"
+# Configure `kubectl` to connect to the new cluster:
+# gcloud container clusters get-credentials "${CLUSTER_MASTER_IP}"
 
-# networks_external_ip="35.198.171.100" # :80-443
-# networks_internal_ip="35.198.124.128" # :22-443
+# kubectl create namespace "${APP_NAMESPACE}"
 
-# networks_internal_ip="35.198.124.128"
-# networks_instance_ip="35.198.124.128"
-# networks_internal_ip_mask="10.156.0.3/20"
-# instance_user="develop"
-
-app_name="app"
-app_namespace="publication"
-
-# echo $SSH_KEY_ID
-
-# ssh -t -i ${SSH_KEY_ID} "${ID_USER}@35.198.124.128" "sudo su - bitnami"
-
-# ssh -t bitnami@35.198.124.128
-# sudo /opt/bitnami/ctlscript.sh restart apache && curl -sIL https://soprun.com
+export PUBLIC_SERVICE_AND_INGRESS_ENABLED=false
+export METRICS_EXPORTER_ENABLED=false

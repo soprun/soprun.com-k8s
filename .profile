@@ -32,6 +32,4 @@
 #  ( curl -sSL $* | gpg --import -)
 #}
 
-
-#curl -sIL 'https://soprun.com'
-curl -ILS 'https://keys.openpgp.org/vks/v1/by-fingerprint/8120213055C84C2C3324FB08B7502F96C5DC44C2' | gpg --import -
+# curl -sIL 'https://soprun.com'
