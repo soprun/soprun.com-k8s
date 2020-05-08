@@ -1,11 +1,9 @@
-#smtpHost: smtp.sendgrid.net
-#smtpPort: 465
-#smtpUser: apikey
-#smtpPassword:
-#smtpUsername:
-#smtpProtocol: tls
-
-# wordpressScheme: https
+# smtpHost: smtp.sendgrid.net
+# smtpPort: 465
+# smtpUser:
+# smtpPassword: password
+# smtpUsername: apikey
+# smtpProtocol: tls
 
 ingress:
   enabled: true
