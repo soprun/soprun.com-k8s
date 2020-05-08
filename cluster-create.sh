@@ -11,27 +11,38 @@ gcloud beta container --project "project-40825" clusters create "cluster" \
   --zone "europe-west3-a" \
   --no-enable-basic-auth \
   --release-channel "regular" \
-  --machine-type "n1-standard-2" \
+  --machine-type "g1-small" \
   --image-type "COS" \
   --disk-type "pd-standard" \
   --disk-size "100" \
   --metadata disable-legacy-endpoints=true \
   --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
+  --max-pods-per-node "28" \
   --num-nodes "3" \
   --enable-stackdriver-kubernetes \
   --enable-ip-alias \
+  --cluster-ipv4-cidr=10.0.0.0/21 \
+  --create-subnetwork=name='cluster-name-subnet', range=10.4.32.0/21 \
+  --services-ipv4-cidr=10.4.0.0/19 \
+  --default-max-pods-per-node=8 \
   --network "projects/project-40825/global/networks/default" \
   --subnetwork "projects/project-40825/regions/europe-west3/subnetworks/default" \
   --enable-intra-node-visibility \
-  --default-max-pods-per-node "110" \
+  --default-max-pods-per-node "28" \
+  --enable-autoscaling \
+  --min-nodes "1" \
+  --max-nodes "3" \
   --no-enable-master-authorized-networks \
-  --addons HorizontalPodAutoscaling,HttpLoadBalancing,CloudRun,GcePersistentDiskCsiDriver \
+  --addons HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver \
   --enable-autoupgrade \
   --enable-autorepair \
+  --max-surge-upgrade 1 \
+  --max-unavailable-upgrade 0 \
   --resource-usage-bigquery-dataset "cluster_usage_metering" \
   --enable-resource-consumption-metering \
   --identity-namespace "project-40825.svc.id.goog" \
   --enable-shielded-nodes \
+  --shielded-secure-boot \
   --security-group "gke-security-groups@soprun.com"
 
 # WARNING: The Pod address range limits the maximum size of the cluster.
