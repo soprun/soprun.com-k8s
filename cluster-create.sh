@@ -7,9 +7,7 @@
 # Псевдонимы диапазонов IP-адресов: 10.40.2.0/24
 # Внешний IP-адрес:
 
-gcloud beta container \
-  --project "project-40825"
-  clusters create "cluster" \
+gcloud beta container --project "project-40825" clusters create "cluster" \
   --zone "europe-west3-a" \
   --no-enable-basic-auth \
   --release-channel "regular" \
