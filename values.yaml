@@ -1,0 +1,17 @@
+#smtpHost: smtp.sendgrid.net
+#smtpPort: 465
+#smtpUser: apikey
+#smtpPassword:
+#smtpUsername:
+#smtpProtocol: tls
+
+# wordpressScheme: https
+
+ingress:
+  enabled: true
+  certManager: true
+  hostname: soprun.com
+  annotations: {
+    kubernetes.io/ingress.class: "nginx",
+    cert-manager.io/issuer: "letsencrypt-prod"
+  }

@@ -1,32 +1,21 @@
 #!/usr/bin/env bash
 
-# set -x
+set -x
+source ./env.sh
 
-# Get started with Google Cloud Platform
-# core
-export PROJECT_NAME="${PROJECT_NAME:-project-name}"
-# compute
-export COMPUTE_REGION="${COMPUTE_REGION:-europe-west3}"
-export COMPUTE_ZONE="${COMPUTE_REGION:-europe-west3-a}"
-# app
-# export APP_INSTANCE_NAME="${APP_INSTANCE_NAME:-app}"
-# export APP_NAMESPACE="${APP_NAMESPACE:-publication}"
+# Create namespace
+kubectl create namespace "${APP_NAMESPACE}"
 
-export APP_INSTANCE_NAME="wordpress"
-export APP_NAMESPACE="wordpress_namespace"
-export CLUSTER_MASTER_IP="35.234.99.88"
-export CLUSTER_NAME="cluster"
+helm repo add bitnami https://charts.bitnami.com/bitnami
 
-# Configure default
-# gcloud config set project ${cloud_project}
-# gcloud config set compute/region ${COMPUTE_REGION}
-# gcloud config set compute/zone ${COMPUTE_ZONE}
-# gcloud config list
+helm install ${APP_INSTANCE_NAME} \
+  --namespace ${APP_NAMESPACE} \
+  -f values.yaml \
+  bitnami/wordpress
 
-# Configure `kubectl` to connect to the new cluster:
-# gcloud container clusters get-credentials "${CLUSTER_MASTER_IP}"
+# https://raw.githubusercontent.com/bitnami/charts/master/bitnami/wordpress/values-production.yaml
 
-# kubectl create namespace "${APP_NAMESPACE}"
+echo Username: user
+echo Password: $(kubectl get secret --namespace wordpress-helm wordpress -o jsonpath="{.data.wordpress-password}" | base64 --decode)
 
-export PUBLIC_SERVICE_AND_INGRESS_ENABLED=false
-export METRICS_EXPORTER_ENABLED=false
+kubectl get svc --namespace "${APP_NAMESPACE}" -w "${APP_INSTANCE_NAME}";
