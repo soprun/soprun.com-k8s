@@ -4,14 +4,17 @@ source ./env.sh
 
 # printenv | sort
 
-# Create namespace
-# kubectl expose namespace "${APP_NAMESPACE}"
+#echo gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_LOCATION}
 
-helm repo add bitnami https://charts.bitnami.com/bitnami
+# Create namespace
+#kubectl create namespace "${APP_NAMESPACE}"
+
+#helm repo add bitnami https://charts.bitnami.com/bitnami
 
 #helm install ${APP_INSTANCE_NAME} \
 #  --namespace ${APP_NAMESPACE} \
-#  -f ./app/values.yaml \
+#  --values ./app/values.yaml \
+#  --dry-run \
 #  bitnami/wordpress
 
 # https://raw.githubusercontent.com/bitnami/charts/master/bitnami/wordpress/values-production.yaml
@@ -30,3 +33,6 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 # gcloud compute zones list
 # gcloud compute regions list
 # gcloud compute machine-types list | more
+
+
+echo 'Ok!'
