@@ -18,7 +18,7 @@ num_nodes=3
 default_max_pods_per_node=28
 
 gcloud beta container --project ${PROJECT_ID} clusters create ${CLUSTER_NAME} \
-  --zone ${CLUSTER_ZONE} \
+  --zone ${CLUSTER_LOCATION} \
   --no-enable-basic-auth \
   --release-channel "regular" \
   --machine-type ${machine_type} \

@@ -6,15 +6,16 @@ set -e
 # set environment variables: Google Cloud Platform
 export PROJECT_ID=${PROJECT_ID:-project-40825}
 export PROJECT_NUMBER=${PROJECT_NUMBER:-797048000142}
+export PROJECT_REGION=${PROJECT_REGION:-europe-west3}
+export PROJECT_ZONE=${PROJECT_ZONE:-europe-west3-a}
 export WORKLOAD_IDENTITY="${PROJECT_ID}.svc.id.goog"
 
 # Cluster
 export CLUSTER_NAME=${CLUSTER_NAME:-cluster}
-export CLUSTER_REGION=${CLUSTER_REGION:-europe-west3}
-export CLUSTER_ZONE=${CLUSTER_REGION:-europe-west3-a}
-export CLUSTER_LOCATION=${CLUSTER_LOCATION:-${CLUSTER_ZONE}} # ZONE_OR_REGION
+export CLUSTER_LOCATION=${CLUSTER_LOCATION:-europe-west3-a} # ZONE_OR_REGION
+export CLUSTER_MASTER_IP=${CLUSTER_MASTER_IP:-34.89.153.11}
 
-# export CLUSTER_MASTER_IPV4=""
+# export CLUSTER_MASTER_IPV4=${CLUSTER_MASTER_IPV4}
 # export CLUSTER_MASTER_IPV4_NAME=""
 
 # export NETWORK_EXTERNAL_IPV4=""
