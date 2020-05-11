@@ -14,7 +14,8 @@ machine_type="g1-small"
 image_type="COS"
 disk_type="pd-standard"
 disk_size=100
-default_pool_num_nodes=3
+num_nodes=3
+default_max_pods_per_node=28
 
 gcloud beta container --project ${PROJECT_ID} clusters create ${CLUSTER_NAME} \
   --zone ${CLUSTER_ZONE} \
@@ -26,13 +27,13 @@ gcloud beta container --project ${PROJECT_ID} clusters create ${CLUSTER_NAME} \
   --disk-size ${disk_size} \
   --metadata disable-legacy-endpoints=true \
   --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
-  --num-nodes ${default_pool_num_nodes} \
+  --num-nodes ${num_nodes} \
   --enable-stackdriver-kubernetes \
   --enable-ip-alias \
   --network "projects/project-40825/global/networks/default" \
   --subnetwork "projects/project-40825/regions/europe-west3/subnetworks/default" \
   --enable-intra-node-visibility \
-  --default-max-pods-per-node "110" \
+  --default-max-pods-per-node ${default_max_pods_per_node} \
   --enable-network-policy \
   --no-enable-master-authorized-networks \
   --addons HorizontalPodAutoscaling,HttpLoadBalancing,NodeLocalDNS,GcePersistentDiskCsiDriver \
