@@ -1,46 +1,52 @@
 #!/usr/bin/env bash
 
-#echo 'Run!...';
-#exit 0;
+source ./env.sh
 
 # Основной внутренний IP-адрес: 10.156.0.4
 # Псевдонимы диапазонов IP-адресов: 10.40.2.0/24
 # Внешний IP-адрес:
 
-gcloud beta container --project "project-40825" clusters create "cluster" \
-  --zone "europe-west3-a" \
+# cluster-ipv4-cidr=10.0.0.0/21 \
+
+# gcloud beta container --project ${PROJECT_ID} clusters create --help >> clusters-create.txt
+
+machine_type="g1-small"
+image_type="COS"
+disk_type="pd-standard"
+disk_size=100
+
+gcloud beta container --project ${PROJECT_ID} clusters create ${CLUSTER_NAME} \
+  --zone ${CLUSTER_ZONE} \
   --no-enable-basic-auth \
   --release-channel "regular" \
-  --machine-type "g1-small" \
-  --image-type "COS" \
-  --disk-type "pd-standard" \
-  --disk-size "100" \
+  --machine-type ${machine_type} \
+  --image-type ${image_type} \
+  --disk-type ${disk_type} \
+  --disk-size ${disk_size} \
   --metadata disable-legacy-endpoints=true \
   --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
-  --max-pods-per-node "28" \
-  --num-nodes "3" \
   --enable-stackdriver-kubernetes \
   --enable-ip-alias \
   --cluster-ipv4-cidr=10.0.0.0/21 \
-  --create-subnetwork=name='cluster-name-subnet', range=10.4.32.0/21 \
   --services-ipv4-cidr=10.4.0.0/19 \
-  --default-max-pods-per-node=8 \
+  --create-subnetwork name="cluster-name-subnet",range=/21 \
   --network "projects/project-40825/global/networks/default" \
   --subnetwork "projects/project-40825/regions/europe-west3/subnetworks/default" \
   --enable-intra-node-visibility \
-  --default-max-pods-per-node "28" \
-  --enable-autoscaling \
+  --default-max-pods-per-node=28 \
   --min-nodes "1" \
   --max-nodes "3" \
+  --max-pods-per-node "28" \
   --no-enable-master-authorized-networks \
   --addons HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver \
   --enable-autoupgrade \
+  --enable-autoscaling \
   --enable-autorepair \
   --max-surge-upgrade 1 \
   --max-unavailable-upgrade 0 \
   --resource-usage-bigquery-dataset "cluster_usage_metering" \
   --enable-resource-consumption-metering \
-  --identity-namespace "project-40825.svc.id.goog" \
+  --identity-namespace ${WORKLOAD_IDENTITY} \
   --enable-shielded-nodes \
   --shielded-secure-boot \
   --security-group "gke-security-groups@soprun.com"

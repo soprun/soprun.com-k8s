@@ -2,15 +2,17 @@
 
 source ./env.sh
 
+# printenv | sort
+
 # Create namespace
-kubectl create namespace "${APP_NAMESPACE}"
+# kubectl expose namespace "${APP_NAMESPACE}"
 
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
-helm install ${APP_INSTANCE_NAME} \
-  --namespace ${APP_NAMESPACE} \
-  -f ./app/values.yaml \
-  bitnami/wordpress
+#helm install ${APP_INSTANCE_NAME} \
+#  --namespace ${APP_NAMESPACE} \
+#  -f ./app/values.yaml \
+#  bitnami/wordpress
 
 # https://raw.githubusercontent.com/bitnami/charts/master/bitnami/wordpress/values-production.yaml
 
