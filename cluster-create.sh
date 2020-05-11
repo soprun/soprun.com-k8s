@@ -8,6 +8,8 @@ source ./env.sh
 
 # cluster-ipv4-cidr=10.0.0.0/21 \
 
+# networks_internal_ip_mask="10.156.0.0/20"
+
 # gcloud beta container --project ${PROJECT_ID} clusters create --help >> clusters-create.txt
 
 machine_type="g1-small"

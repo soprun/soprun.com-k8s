@@ -1,0 +1,40 @@
+{
+  "url": "http://soprun.com:80",
+  "server": {
+    "port": 2368,
+    "host": "127.0.0.1"
+  },
+  "database": {
+    "client": "mysql",
+    "connection": {
+      "host": "localhost",
+      "user": "bn_ghost",
+      "password": "19507632f4",
+      "database": "bitnami_ghost"
+    }
+  },
+  "mail": {
+    "transport": "SMTP",
+    "from": "no-reply@soprun.com",
+    "host": "smtp.sendgrid.net",
+    "options": {
+      "service": "Sendgrid",
+      "host": "smtp.sendgrid.net",
+      "port": 465,
+      "secure": true,
+      "auth": {
+        "user": "apikey",
+        "pass": "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"
+      }
+    }
+  },
+  "logging": {
+    "transports": [
+      "file"
+    ]
+  },
+  "process": "local",
+  "paths": {
+    "contentPath": "/opt/bitnami/apps/ghost/htdocs/content"
+  }
+}

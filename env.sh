@@ -18,7 +18,7 @@ export WORKLOAD_IDENTITY="${PROJECT_ID}.svc.id.goog"
 # export CLUSTER_MASTER_IPV4_NAME=""
 
 # export NETWORK_EXTERNAL_IPV4=""
-# export NETWORK_EXTERNAL_IPV4_NAME="static-ip"
+# export NETWORK_EXTERNAL_IPV4_NAME="static-ipv4"
 # export NETWORK_EXTERNAL_IPV6=""
 # export NETWORK_EXTERNAL_IPV6_NAME="static-ipv6"
 
