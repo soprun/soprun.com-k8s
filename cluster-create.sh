@@ -5,13 +5,13 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="sandbox-cluster-2"
+GKE_CLUSTER_NAME="sandbox-cluster-3"
 
 # Configure: Google Kubernetes Engine (GKE)
 
-echo gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_NAME} \
+gcloud container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_NAME} \
   --user-output-enabled \
-  --verbosity \
+  --verbosity=info \
   --zone=${GKE_CLUSTER_LOCATION} \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
   --machine-type ${GKE_MACHINE_TYPE} \
@@ -40,17 +40,6 @@ echo gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLU
   --resource-usage-bigquery-dataset "cluster_usage_metering"
 
 # --security-group "gke-security-groups@soprun.com"
-
-# WARNING: Starting with version 1.18, clusters will have shielded GKE nodes by default.
-# WARNING: The Pod address range limits the maximum size of the cluster.
-# Please refer to https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
-# to learn how to optimize IP address allocation.
-# This will enable the autorepair feature for nodes.
-# Please see https://cloud.google.com/kubernetes-engine/docs/node-auto-repair
-# for more information on node autorepairs.
-
-
-#########
 
 # WARNING: The Pod address range limits the maximum size of the cluster.
 # Please refer to https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
