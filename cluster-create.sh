@@ -5,31 +5,13 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="sandbox-cluster"
+GKE_CLUSTER_NAME="sandbox-cluster-2"
 
 # Configure: Google Kubernetes Engine (GKE)
 
-default_max_pods_per_node=16
-
-number_nodes=3 # default=3 The number of nodes to be created in each of the cluster's zones.
-min_nodes_size=0
-max_nodes_size=3
-
-max_surge_upgrade=1
-max_unavailable_upgrade=0
-
-# --cluster-ipv4-cidr=10.0.0.0/14
-
-# --max-nodes-per-pool=MAX_NODES_PER_POOL
-# --default-max-nodes-per-pool=MAX_NODES_PER_POOL
-# The maximum number of nodes to allocate per default initial node pool.
-
-# --max-pods-per-node=MAX_PODS_PER_NODE
-# --default-max-pods-per-node=MAX_PODS_PER_NODE
-# The max number of pods per node for this node pool.
-
-echo gcloud container clusters create ${GKE_CLUSTER_NAME} \
+echo gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_NAME} \
   --user-output-enabled \
+  --verbosity \
   --zone=${GKE_CLUSTER_LOCATION} \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
   --machine-type ${GKE_MACHINE_TYPE} \
@@ -46,12 +28,12 @@ echo gcloud container clusters create ${GKE_CLUSTER_NAME} \
   --enable-network-policy \
   --enable-shielded-nodes \
   --enable-resource-consumption-metering \
-  --num-nodes ${number_nodes} \
-  --min-nodes ${min_nodes_size}\
-  --max-nodes ${max_nodes_size} \
-  --max-surge-upgrade ${max_surge_upgrade} \
-  --max-unavailable-upgrade ${max_unavailable_upgrade} \
-  --default-max-pods-per-node ${default_max_pods_per_node} \
+  --num-nodes ${GKE_CLUSTER_NUMBER_NODES} \
+  --default-max-pods-per-node ${GKE_CLUSTER_MAXIMUM_PODS_PER_NODE} \
+  --min-nodes ${GKE_CLUSTER_MINIMUM_NUMBER_NODES}\
+  --max-nodes ${GKE_CLUSTER_MAXIMUM_NUMBER_NODES} \
+  --max-surge-upgrade ${GKE_CLUSTER_MAXIMUM_SURGE_UPGRADE} \
+  --max-unavailable-upgrade ${GKE_CLUSTER_MAXIMUM_UNAVAILABLE_UPGRADE} \
   --create-subnetwork "name=${GKE_CLUSTER_SUBNETWORK_NAME},range=${GKE_CLUSTER_SUBNETWORK_RANGE}" \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
@@ -60,6 +42,16 @@ echo gcloud container clusters create ${GKE_CLUSTER_NAME} \
 # --security-group "gke-security-groups@soprun.com"
 
 # WARNING: Starting with version 1.18, clusters will have shielded GKE nodes by default.
+# WARNING: The Pod address range limits the maximum size of the cluster.
+# Please refer to https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
+# to learn how to optimize IP address allocation.
+# This will enable the autorepair feature for nodes.
+# Please see https://cloud.google.com/kubernetes-engine/docs/node-auto-repair
+# for more information on node autorepairs.
+
+
+#########
+
 # WARNING: The Pod address range limits the maximum size of the cluster.
 # Please refer to https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
 # to learn how to optimize IP address allocation.
