@@ -5,7 +5,7 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="sandbox-cluster-5"
+GKE_CLUSTER_NAME="sandbox-cluster-6"
 GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
@@ -13,7 +13,7 @@ GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 tags="default-allow-ssh,default-allow-http,default-allow-https"
 scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
 
-gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_NAME} \
+gcloud container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
   --user-output-enabled \
   --verbosity=info \
   --zone=${GKE_CLUSTER_LOCATION} \
@@ -28,7 +28,7 @@ gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_
   --enable-ip-alias \
   --enable-autorepair \
   --enable-autoupgrade \
-  --enable-autoscaling \
+  --no-enable-autoscaling \
   --enable-stackdriver-kubernetes \
   --enable-intra-node-visibility \
   --enable-network-policy \
