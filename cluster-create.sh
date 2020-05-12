@@ -2,8 +2,7 @@
 
 source ./env.sh
 
-#printenv | sort
-#exit;
+#printenv | sort;exit;
 
 # Create Google Kubernetes Engine (GKE)
 
@@ -29,7 +28,11 @@ NetworkPolicy,\
 GcePersistentDiskCsiDriver\
 "
 
-git commit -a -S -m "clusters create: ${GKE_CLUSTER_NAME}"
+git commit \
+  --quiet \
+  --all \
+  --gpg-sign=${ID_GPG_KEY} \
+  --message "clusters create: ${GKE_CLUSTER_NAME}"
 
 gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
   --async \
