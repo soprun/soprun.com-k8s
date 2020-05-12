@@ -9,6 +9,8 @@ GKE_CLUSTER_NAME="sandbox-cluster"
 
 # Configure: Google Kubernetes Engine (GKE)
 
+default_max_pods_per_node=16
+
 number_nodes=3 # default=3 The number of nodes to be created in each of the cluster's zones.
 min_nodes_size=0
 max_nodes_size=3
@@ -26,7 +28,7 @@ max_unavailable_upgrade=0
 # --default-max-pods-per-node=MAX_PODS_PER_NODE
 # The max number of pods per node for this node pool.
 
-gcloud container clusters create ${GKE_CLUSTER_NAME} \
+echo gcloud container clusters create ${GKE_CLUSTER_NAME} \
   --user-output-enabled \
   --zone=${GKE_CLUSTER_LOCATION} \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
@@ -49,11 +51,13 @@ gcloud container clusters create ${GKE_CLUSTER_NAME} \
   --max-nodes ${max_nodes_size} \
   --max-surge-upgrade ${max_surge_upgrade} \
   --max-unavailable-upgrade ${max_unavailable_upgrade} \
+  --default-max-pods-per-node ${default_max_pods_per_node} \
   --create-subnetwork "name=${GKE_CLUSTER_SUBNETWORK_NAME},range=${GKE_CLUSTER_SUBNETWORK_RANGE}" \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
-  --resource-usage-bigquery-dataset "cluster_usage_metering" \
-  --security-group "gke-security-groups@soprun.com"
+  --resource-usage-bigquery-dataset "cluster_usage_metering"
+
+# --security-group "gke-security-groups@soprun.com"
 
 # WARNING: Starting with version 1.18, clusters will have shielded GKE nodes by default.
 # WARNING: The Pod address range limits the maximum size of the cluster.
