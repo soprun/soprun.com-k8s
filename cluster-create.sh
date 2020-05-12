@@ -26,10 +26,13 @@ max_unavailable_upgrade=0
 # --default-max-pods-per-node=MAX_PODS_PER_NODE
 # The max number of pods per node for this node pool.
 
-
 gcloud container clusters create ${GKE_CLUSTER_NAME} \
   --zone=${GKE_CLUSTER_LOCATION} \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
+  --machine-type ${GKE_MACHINE_TYPE} \
+  --image-type ${GKE_IMAGE_TYPE} \
+  --disk-type ${GKE_DISK_TYPE} \
+  --disk-size ${GKE_DISK_SIZE} \
   --num-nodes ${number_nodes} \
   --min-nodes ${min_nodes_size}\
   --max-nodes ${max_nodes_size} \
@@ -46,5 +49,4 @@ gcloud container clusters create ${GKE_CLUSTER_NAME} \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
   --resource-usage-bigquery-dataset "cluster_usage_metering" \
-  --enable-resource-consumption-metering \
-
+  --enable-resource-consumption-metering
