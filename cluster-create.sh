@@ -72,4 +72,4 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --security-group "gke-security-groups@soprun.com"
 
 gcloud container clusters describe ${GKE_CLUSTER_NAME} \
-  --format yaml >> "cluster-describe-${GKE_CLUSTER_NAME}.yaml"
+  --format yaml >> "tmp/cluster-describe-${GKE_CLUSTER_NAME}.yaml"
