@@ -5,7 +5,7 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="sandbox-cluster-4"
+GKE_CLUSTER_NAME="sandbox-cluster-5"
 GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
@@ -40,7 +40,8 @@ gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_
   --max-nodes ${GKE_CLUSTER_MAXIMUM_NUMBER_NODES} \
   --max-surge-upgrade ${GKE_CLUSTER_MAXIMUM_SURGE_UPGRADE} \
   --max-unavailable-upgrade ${GKE_CLUSTER_MAXIMUM_UNAVAILABLE_UPGRADE} \
-  --create-subnetwork range=${GKE_CLUSTER_SUBNETWORK_RANGE} \
+  --network default \
+  --subnetwork default \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
   --resource-usage-bigquery-dataset "cluster_usage_metering" \
