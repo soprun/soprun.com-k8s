@@ -21,7 +21,7 @@ GcePersistentDiskCsiDriver\
 git commit -a -S -m "clusters create: ${GKE_CLUSTER_NAME}"
 
 gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
-  --region europe-west3 \
+  --zone ${GKE_CLUSTER_LOCATION} \
   --no-enable-basic-auth \
   --release-channel regular \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
