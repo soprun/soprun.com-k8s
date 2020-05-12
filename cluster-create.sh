@@ -5,22 +5,25 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="cluster-sandbox-12"
-GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
-
 # Configure: Google Kubernetes Engine (GKE)
 
 tags="default-allow-ssh,default-allow-http,default-allow-https"
 scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
 metadata="disable-legacy-endpoints=true"
+addons="\
+HttpLoadBalancing,\
+HorizontalPodAutoscaling,\
+KubernetesDashboard,\
+NetworkPolicy,\
+ApplicationManager,\
+GcePersistentDiskCsiDriver\
+"
 
-printenv | sort >> tmp/cluster-${GKE_CLUSTER_NAME}.log
+git commit -a -S -m "commit clusters: ${GKE_CLUSTER_NAME}"
 
-gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
-  --user-output-enabled \
-  --verbosity=info \
+echo gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
   --zone=${GKE_CLUSTER_LOCATION} \
-  --node-locations europe-west3-a,europe-west3-b,europe-west3-c \
+  --log-http \
   --no-enable-basic-auth \
   --release-channel regular \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
@@ -31,6 +34,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --metadata ${metadata} \
   --tags ${tags} \
   --scopes ${scopes} \
+  --addons ${addons} \
   --enable-ip-alias \
   --enable-autorepair \
   --enable-autoupgrade \
