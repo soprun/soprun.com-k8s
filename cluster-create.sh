@@ -2,51 +2,49 @@
 
 source ./env.sh
 
-# Основной внутренний IP-адрес: 10.156.0.4
-# Псевдонимы диапазонов IP-адресов: 10.40.2.0/24
-# Внешний IP-адрес:
+# printenv | sort
+# exit;
 
-# cluster-ipv4-cidr=10.0.0.0/21 \
+GKE_CLUSTER_NAME="sandbox_cluster"
 
-# networks_internal_ip_mask="10.156.0.0/20"
+# Configure: Google Kubernetes Engine (GKE)
 
-# gcloud beta container --project ${PROJECT_ID} clusters create --help >> clusters-create.txt
+number_nodes=3 # default=3 The number of nodes to be created in each of the cluster's zones.
+min_nodes_size=0
+max_nodes_size=3
 
-machine_type="g1-small"
-image_type="COS"
-disk_type="pd-standard"
-disk_size=100
-num_nodes=3
-default_max_pods_per_node=28
+max_surge_upgrade=1
+max_unavailable_upgrade=0
 
-gcloud beta container --project ${PROJECT_ID} clusters create ${CLUSTER_NAME} \
-  --zone ${CLUSTER_LOCATION} \
-  --no-enable-basic-auth \
-  --release-channel "regular" \
-  --machine-type ${machine_type} \
-  --image-type ${image_type} \
-  --disk-type ${disk_type} \
-  --disk-size ${disk_size} \
-  --metadata disable-legacy-endpoints=true \
-  --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
-  --num-nodes ${num_nodes} \
-  --enable-stackdriver-kubernetes \
+# --cluster-ipv4-cidr=10.0.0.0/14
+
+# --max-nodes-per-pool=MAX_NODES_PER_POOL
+# --default-max-nodes-per-pool=MAX_NODES_PER_POOL
+# The maximum number of nodes to allocate per default initial node pool.
+
+# --max-pods-per-node=MAX_PODS_PER_NODE
+# --default-max-pods-per-node=MAX_PODS_PER_NODE
+# The max number of pods per node for this node pool.
+
+
+gcloud container clusters create ${GKE_CLUSTER_NAME} \
+  --zone=${GKE_CLUSTER_LOCATION} \
+  --workload-pool ${GKE_WORKLOAD_IDENTITY} \
+  --num-nodes ${number_nodes} \
+  --min-nodes ${min_nodes_size}\
+  --max-nodes ${max_nodes_size} \
+  --max-surge-upgrade ${max_surge_upgrade} \
+  --max-unavailable-upgrade ${max_unavailable_upgrade} \
   --enable-ip-alias \
-  --network "projects/project-40825/global/networks/default" \
-  --subnetwork "projects/project-40825/regions/europe-west3/subnetworks/default" \
-  --enable-intra-node-visibility \
-  --default-max-pods-per-node ${default_max_pods_per_node} \
-  --enable-network-policy \
-  --no-enable-master-authorized-networks \
-  --addons HorizontalPodAutoscaling,HttpLoadBalancing,NodeLocalDNS,GcePersistentDiskCsiDriver \
-  --enable-autoupgrade \
+  --create-subnetwork "name=${GKE_CLUSTER_SUBNETWORK_NAME},range=${GKE_CLUSTER_SUBNETWORK_RANGE}" \
   --enable-autorepair \
-  --max-surge-upgrade 1 \
-  --max-unavailable-upgrade 0 \
-  --enable-tpu \
+  --enable-autoupgrade \
+  --enable-autoscaling \
+  --enable-stackdriver-kubernetes \
+  --enable-intra-node-visibility \
+  --enable-network-policy \
+  --shielded-integrity-monitoring \
+  --shielded-secure-boot \
   --resource-usage-bigquery-dataset "cluster_usage_metering" \
   --enable-resource-consumption-metering \
-  --identity-namespace ${WORKLOAD_IDENTITY} \
-  --enable-shielded-nodes \
-  --shielded-secure-boot \
-  --security-group "gke-security-groups@soprun.com"
+
