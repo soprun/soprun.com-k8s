@@ -5,7 +5,7 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="sandbox-cluster-6"
+GKE_CLUSTER_NAME="sandbox-cluster-8"
 GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
@@ -45,9 +45,8 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --max-unavailable-upgrade ${GKE_CLUSTER_MAXIMUM_UNAVAILABLE_UPGRADE} \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
-  --resource-usage-bigquery-dataset "cluster_usage_metering"
-
-# --security-group "gke-security-groups@soprun.com"
+  --resource-usage-bigquery-dataset "cluster_usage_metering" \
+  --security-group "gke-security-groups@soprun.com"
 
 # WARNING: The Pod address range limits the maximum size of the cluster.
 # Please refer to https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
