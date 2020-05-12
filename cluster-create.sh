@@ -10,10 +10,15 @@ GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
 
+tags="default-allow-ssh,default-allow-http,default-allow-https"
+scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
+
 gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_NAME} \
   --user-output-enabled \
   --verbosity=info \
   --zone=${GKE_CLUSTER_LOCATION} \
+  --no-enable-basic-auth \
+  --release-channel "regular" \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
   --machine-type ${GKE_MACHINE_TYPE} \
   --image-type ${GKE_IMAGE_TYPE} \
@@ -38,7 +43,9 @@ gcloud beta container --project ${GCP_PROJECT_ID} clusters create ${GKE_CLUSTER_
   --create-subnetwork range=${GKE_CLUSTER_SUBNETWORK_RANGE} \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
-  --resource-usage-bigquery-dataset "cluster_usage_metering"
+  --resource-usage-bigquery-dataset "cluster_usage_metering" \
+  --tags ${tags} \
+  --scopes ${scopes}
 
 # --security-group "gke-security-groups@soprun.com"
 
