@@ -22,10 +22,10 @@ export GKE_CLUSTER_NAME=${GKE_CLUSTER_NAME:-cluster-sandbox-$RANDOM}
 export GKE_CLUSTER_LOCATION=${GKE_CLUSTER_LOCATION:-europe-west3-a} # ZONE_OR_REGION
 export GKE_WORKLOAD_IDENTITY=${GKE_WORKLOAD_IDENTITY:-"${GCP_PROJECT_ID}.svc.id.goog"}
 
-export GKE_DISK_TYPE=${GKE_DISK_TYPE:-"pd-standard"} # pd-standard, pd-ssd.
-export GKE_DISK_SIZE=${GKE_DISK_SIZE:-10}
-export GKE_MACHINE_TYPE=${GKE_MACHINE_TYPE:-"g1-small"}
-export GKE_IMAGE_TYPE=${GKE_IMAGE_TYPE:-"COS"}
+export GKE_DISK_TYPE=${GKE_DISK_TYPE:-pd-standard} # pd-standard, pd-ssd.
+export GKE_DISK_SIZE=${GKE_DISK_SIZE:-20}
+export GKE_MACHINE_TYPE=${GKE_MACHINE_TYPE:-g1-small}
+export GKE_IMAGE_TYPE=${GKE_IMAGE_TYPE:-COS}
 
 # Minimum number of nodes
 
@@ -47,7 +47,7 @@ export GKE_CLUSTER_MAXIMUM_UNAVAILABLE_UPGRADE=${GKE_CLUSTER_MAXIMUM_UNAVAILABLE
 # 10.0.0.0/20 - 4,096
 
 export GKE_CLUSTER_SUBNETWORK_NAME=${GKE_CLUSTER_SUBNETWORK_NAME:-"${GKE_APP_NAME}-subnet"}
-export GKE_CLUSTER_SUBNETWORK_RANGE=${GKE_CLUSTER_SUBNETWORK_RANGE:-"10.156.0.0/28"} # region: europe-west3
+export GKE_CLUSTER_SUBNETWORK_RANGE=${GKE_CLUSTER_SUBNETWORK_RANGE:-10.156.0.0/28} # region: europe-west3
 
 # Configure: Google Compute Engine (GCE)
 # ...

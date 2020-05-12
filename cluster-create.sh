@@ -2,25 +2,37 @@
 
 source ./env.sh
 
-# printenv | sort
-# exit;
+#printenv | sort
+#exit;
 
-# Configure: Google Kubernetes Engine (GKE)
+# Create Google Kubernetes Engine (GKE)
 
-tags="default-allow-ssh,default-allow-http,default-allow-https"
-scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
-metadata="disable-legacy-endpoints=true"
+tags="\
+default-allow-ssh,\
+default-allow-http,\
+default-allow-https\
+"
+scopes="\
+storage-ro,\
+logging-write,\
+monitoring,\
+service-control,\
+service-management,\
+trace\
+"
+metadata="\
+disable-legacy-endpoints=true\
+"
 addons="\
 HttpLoadBalancing,\
-HorizontalPodAutoscaling,\
 NetworkPolicy,\
-ApplicationManager,\
 GcePersistentDiskCsiDriver\
 "
 
 git commit -a -S -m "clusters create: ${GKE_CLUSTER_NAME}"
 
 gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
+  --async \
   --zone ${GKE_CLUSTER_LOCATION} \
   --no-enable-basic-auth \
   --release-channel regular \
