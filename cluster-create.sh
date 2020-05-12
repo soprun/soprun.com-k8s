@@ -5,7 +5,7 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="cluster-sandbox-11"
+GKE_CLUSTER_NAME="cluster-sandbox-12"
 GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
@@ -20,6 +20,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --user-output-enabled \
   --verbosity=info \
   --zone=${GKE_CLUSTER_LOCATION} \
+  --node-locations europe-west3-a,europe-west3-b,europe-west3-c \
   --no-enable-basic-auth \
   --release-channel regular \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
