@@ -5,7 +5,7 @@ source ./env.sh
 # printenv | sort
 # exit;
 
-GKE_CLUSTER_NAME="cluster-sandbox-10"
+GKE_CLUSTER_NAME="cluster-sandbox-11"
 GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
@@ -14,7 +14,7 @@ tags="default-allow-ssh,default-allow-http,default-allow-https"
 scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
 metadata="disable-legacy-endpoints=true"
 
-printenv | sort >> cluster-${GKE_CLUSTER_NAME}.log
+printenv | sort >> tmp/cluster-${GKE_CLUSTER_NAME}.log
 
 gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
   --user-output-enabled \
@@ -34,6 +34,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --enable-autorepair \
   --enable-autoupgrade \
   --enable-autoscaling \
+  --autoscaling-profile optimize-utilization \
   --enable-stackdriver-kubernetes \
   --enable-intra-node-visibility \
   --enable-network-policy \
@@ -49,10 +50,3 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --shielded-secure-boot \
   --resource-usage-bigquery-dataset "cluster_usage_metering" \
   --security-group "gke-security-groups@soprun.com"
-
-# WARNING: The Pod address range limits the maximum size of the cluster.
-# Please refer to https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
-# to learn how to optimize IP address allocation.
-# This will enable the autorepair feature for nodes.
-# Please see https://cloud.google.com/kubernetes-engine/docs/node-auto-repair
-# for more information on node autorepairs.
