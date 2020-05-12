@@ -12,23 +12,26 @@ GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 tags="default-allow-ssh,default-allow-http,default-allow-https"
 scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
+metadata="disable-legacy-endpoints=true"
 
-gcloud container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
+echo gcloud container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
   --user-output-enabled \
   --verbosity=info \
   --zone=${GKE_CLUSTER_LOCATION} \
   --no-enable-basic-auth \
-  --release-channel "regular" \
+  --release-channel regular \
   --workload-pool ${GKE_WORKLOAD_IDENTITY} \
   --machine-type ${GKE_MACHINE_TYPE} \
   --image-type ${GKE_IMAGE_TYPE} \
   --disk-type ${GKE_DISK_TYPE} \
   --disk-size ${GKE_DISK_SIZE} \
-  --metadata disable-legacy-endpoints=true \
+  --metadata ${metadata} \
+  --tags ${tags} \
+  --scopes ${scopes} \
   --enable-ip-alias \
   --enable-autorepair \
   --enable-autoupgrade \
-  --no-enable-autoscaling \
+  --enable-autoscaling \
   --enable-stackdriver-kubernetes \
   --enable-intra-node-visibility \
   --enable-network-policy \
@@ -40,13 +43,9 @@ gcloud container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID}
   --max-nodes ${GKE_CLUSTER_MAXIMUM_NUMBER_NODES} \
   --max-surge-upgrade ${GKE_CLUSTER_MAXIMUM_SURGE_UPGRADE} \
   --max-unavailable-upgrade ${GKE_CLUSTER_MAXIMUM_UNAVAILABLE_UPGRADE} \
-  --network default \
-  --subnetwork default \
   --shielded-integrity-monitoring \
   --shielded-secure-boot \
-  --resource-usage-bigquery-dataset "cluster_usage_metering" \
-  --tags ${tags} \
-  --scopes ${scopes}
+  --resource-usage-bigquery-dataset "cluster_usage_metering"
 
 # --security-group "gke-security-groups@soprun.com"
 
