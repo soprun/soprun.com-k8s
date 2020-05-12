@@ -13,19 +13,12 @@ GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 tags="default-allow-ssh,default-allow-http,default-allow-https"
 scopes="storage-ro,logging-write,monitoring,service-control,service-management,trace"
 metadata="disable-legacy-endpoints=true"
-labels="\
-env=prod,\
-app-name=${GKE_APP_NAME},\
-cluster-name=${GKE_CLUSTER_NAME},\
-cluster-number-nodes=${GKE_CLUSTER_NUMBER_NODES}\
-"
-node_labels=""
 
 printenv | sort >> cluster-${GKE_CLUSTER_NAME}.log
 
-gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
+gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJECT_ID} \
+  --user-output-enabled \
   --verbosity=info \
-  --project ${GCP_PROJECT_ID} \
   --zone=${GKE_CLUSTER_LOCATION} \
   --no-enable-basic-auth \
   --release-channel regular \
@@ -37,8 +30,6 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
   --metadata ${metadata} \
   --tags ${tags} \
   --scopes ${scopes} \
-  --labels ${labels} \
-  --node-labels ${node_labels} \
   --enable-ip-alias \
   --enable-autorepair \
   --enable-autoupgrade \
