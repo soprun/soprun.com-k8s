@@ -44,6 +44,9 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} --project ${GCP_PROJEC
   --enable-network-policy \
   --enable-shielded-nodes \
   --enable-resource-consumption-metering \
+  --enable-logging-monitoring-system-only \
+  --enable-pod-security-policy \
+  --enable-vertical-pod-autoscaling \
   --num-nodes ${GKE_CLUSTER_NUMBER_NODES} \
   --default-max-pods-per-node ${GKE_CLUSTER_MAXIMUM_PODS_PER_NODE} \
   --min-nodes ${GKE_CLUSTER_MINIMUM_NUMBER_NODES}\
