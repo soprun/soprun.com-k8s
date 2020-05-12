@@ -13,7 +13,6 @@ metadata="disable-legacy-endpoints=true"
 addons="\
 HttpLoadBalancing,\
 HorizontalPodAutoscaling,\
-KubernetesDashboard,\
 NetworkPolicy,\
 ApplicationManager,\
 GcePersistentDiskCsiDriver\
