@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
 # export GKE_APP_DOMAIN_NAME=${GKE_APP_DOMAIN_NAME}
 export GKE_APP_NAME=${GKE_APP_NAME:-app}

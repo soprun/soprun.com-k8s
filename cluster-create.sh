@@ -6,6 +6,7 @@ source ./env.sh
 # exit;
 
 GKE_CLUSTER_NAME="sandbox-cluster-3"
+GKE_CLUSTER_SUBNETWORK_NAME="${GKE_CLUSTER_NAME}-subnet"
 
 # Configure: Google Kubernetes Engine (GKE)
 
