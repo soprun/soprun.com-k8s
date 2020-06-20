@@ -1,6 +1,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: "sandbox-namespace"
+
+# Adds namespace to all resources.
+# namespace: application-system
+
+# namePrefix: application-
+
+# Labels to add to all resources and selectors.
+commonLabels:
+  app.kubernetes.io/name: wordpress
 
 resources:
-  - wordpress.yaml
+  - deployment.yaml
+
+secretGenerator:
+  - name: wordpress-secret
+    literals:
+      - endpoint=35.198.107.225:3306
+      - name=sandbox_database
+      - user=sandbox
+      - password=113w3KbyJ8LkQOP
