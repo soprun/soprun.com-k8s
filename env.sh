@@ -46,11 +46,11 @@ echo "Set project ${PROJECT_ID}..."
 # gcloud config set project ${PROJECT_ID} &>/dev/null
 # gcloud config set compute/zone ${CLUSTER_ZONE}
 
+echo "Get cluster credentials..."
+gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE}
+
 echo "Set current namespace ${DEPLOYMENT_NAMESPACE}..."
 kubectl config set-context --current --namespace=${DEPLOYMENT_NAMESPACE} &>/dev/null
 
 echo "Get Docker credentials..."
 # gcloud auth configure-docker
-
-echo "Get cluster credentials..."
-#gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE}
