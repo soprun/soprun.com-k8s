@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -ex
-
 source env.sh
 
 # Configure gcloud as a Docker credential helper:
