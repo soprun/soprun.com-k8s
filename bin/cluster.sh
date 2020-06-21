@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-source env.sh
+source ../env.sh
 
 gcloud container clusters create ${CLUSTER_NAME} \
     --num-nodes=3 \
