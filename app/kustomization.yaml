@@ -23,12 +23,12 @@ secretGenerator:
   - name: wordpress-secret
     literals:
       - APP_SECRET=secret
-  - name: wordpress-database
-    literals:
-      - DATABASE_HOST=localhost
-      - DATABASE_USERNAME=john
-      - DATABASE_PASSWORD=secret
-      - DATABASE_NAME=sandbox
+#  - name: wordpress-database
+#    literals:
+#      - DATABASE_HOST=localhost
+#      - DATABASE_USERNAME=john
+#      - DATABASE_PASSWORD=secret
+#      - DATABASE_NAME=sandbox
   - name: wordpress-mail
     literals:
       - APP_FROM_EMAIL=no-reply@soprun.com

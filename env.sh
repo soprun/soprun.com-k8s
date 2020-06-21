@@ -10,10 +10,10 @@ export CLOUDSQL_ID="shared-database"
 export CLOUDSQL_NAME="${PROJECT_ID}:${CLUSTER_REGION}:${CLOUDSQL_ID}"
 # export CLOUDSQL_ROOT_PASSWORD="oGeqk8NshH6AEavD"
 
-export DATABASE_ENDPOINT="10.98.160.7"
+export DATABASE_HOST="10.98.160.7"
 export DATABASE_USERNAME="sandbox"
 export DATABASE_PASSWORD="113w3KbyJ8LkQOP"
-export DATABASE_DATABASE_NAME="sandbox_database"
+export DATABASE_NAME="sandbox_database"
 
 # ...
 # ----------------------------------
@@ -23,3 +23,12 @@ export DEPLOYMENT_NAMESPACE="sandbox"
 export DEPLOYMENT_INSTANCE_NAME="instance"
 
 # projects/project-40825/locations/europe-west3/keyRings/default/cryptoKeys/default-encryption-decrypt
+
+# Определение пространства имён для всех команд
+kubectl config set-context --current --namespace=${DEPLOYMENT_NAMESPACE}
+
+# Проверка
+# kubectl config view --minify | grep namespace:
+
+# ...
+# ----------------------------------
