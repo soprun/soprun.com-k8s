@@ -8,7 +8,7 @@ set -e
 source env.sh
 
 echo "Cluster create namespace..."
-kubectl create namespace ${DEPLOYMENT_NAMESPACE}
+# kubectl create namespace ${DEPLOYMENT_NAMESPACE}
 
 echo "Cluster create secret..."
 #kubectl create secret generic wordpress-secret \
@@ -19,9 +19,16 @@ echo "Cluster create secret..."
 #    --from-literal=DATABASE_NAME=${DATABASE_NAME} \
 #    --output yaml
 
-echo "Cluster apply configuration in app..."
-# kubectl apply --kustomize ./app/
+kubectl create secret generic database-credentials \
+  --from-literal endpoint=${DATABASE_ENDPOINT} \
+  --from-literal name=${DATABASE_NAME} \
+  --from-literal username=${DATABASE_USERNAME} \
+  --from-literal password=${DATABASE_PASSWORD} \
+  --output yaml \
+  --dry-run=client | kubectl apply -f -
 
+echo "Cluster apply configuration in app..."
+kubectl apply --kustomize ./app/
 
 # export SERVICE_IP=$(kubectl get svc --namespace ${DEPLOYMENT_NAMESPACE} ${DEPLOYMENT_INSTANCE_NAME} --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
 

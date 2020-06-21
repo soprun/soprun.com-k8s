@@ -29,6 +29,8 @@ export CLOUDSQL_ROOT_PASSWORD="oGeqk8NshH6AEavD"
 # shared-database: sandbox
 # ----------------------------------
 export DATABASE_HOST="10.98.160.7"
+export DATABASE_PORT="3306"
+export DATABASE_ENDPOINT="${DATABASE_HOST}:${DATABASE_PORT}"
 export DATABASE_USERNAME="sandbox"
 export DATABASE_PASSWORD="113w3KbyJ8LkQOP"
 export DATABASE_NAME="sandbox_database"
@@ -45,7 +47,7 @@ echo "Set project ${PROJECT_ID}..."
 # gcloud config set compute/zone ${CLUSTER_ZONE}
 
 echo "Set current namespace ${DEPLOYMENT_NAMESPACE}..."
-# kubectl config set-context --current --namespace=${DEPLOYMENT_NAMESPACE} &>/dev/null
+kubectl config set-context --current --namespace=${DEPLOYMENT_NAMESPACE} &>/dev/null
 
 echo "Get Docker credentials..."
 # gcloud auth configure-docker

@@ -3,9 +3,7 @@
 set -e
 source env.sh
 
-CLUSTER_NAME=persistent-disk-tutorial
-
-gcloud container clusters create $CLUSTER_NAME \
+gcloud container clusters create ${CLUSTER_NAME} \
     --num-nodes=3 \
     --enable-autoupgrade \
     --no-enable-basic-auth \
