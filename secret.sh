@@ -32,3 +32,13 @@ readonly SECRET_NAME=wordpress-database-b56gc4mdch
 #    --dry-run=client | kubectl apply -f -
 #
 #kubectl get secret wordpress-database --output yaml
+
+
+kubectl create secret generic wordpress-secret \
+    --from-literal=APP_SECRET=$(openssl rand -base64 16) \
+    --from-literal=DATABASE_HOST=${DATABASE_HOST} \
+    --from-literal=DATABASE_USERNAME=${DATABASE_USERNAME} \
+    --from-literal=DATABASE_PASSWORD=${DATABASE_PASSWORD} \
+    --from-literal=DATABASE_NAME=${DATABASE_NAME} \
+    --output yaml \
+    --dry-run=client

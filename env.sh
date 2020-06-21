@@ -25,7 +25,7 @@ export DEPLOYMENT_INSTANCE_NAME="instance"
 # projects/project-40825/locations/europe-west3/keyRings/default/cryptoKeys/default-encryption-decrypt
 
 # Определение пространства имён для всех команд
-kubectl config set-context --current --namespace=${DEPLOYMENT_NAMESPACE}
+kubectl config set-context --current --namespace=${DEPLOYMENT_NAMESPACE} &>/dev/null
 
 # Проверка
 # kubectl config view --minify | grep namespace:
