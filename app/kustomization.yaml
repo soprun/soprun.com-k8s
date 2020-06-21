@@ -13,10 +13,27 @@ commonLabels:
 resources:
   - deployment.yaml
 
+configMapGenerator:
+  - name: wordpress-vars
+    literals:
+      - APP_DOMAIN=soprun.com
+      - APP_URL=https://soprun.com
+  - name: wordpress-mail
+    literals:
+      - APP_FROM_EMAIL=no-reply@soprun.com
+      - APP_EMAIL_SMTP=smtp.gmail.com
+      - APP_EMAIL_PORT=587
+      - APP_EMAIL_ENCRYPTION=TLS
+
 secretGenerator:
   - name: wordpress-secret
     literals:
-      - endpoint=35.198.107.225:3306
-      - name=sandbox_database
-      - user=sandbox
-      - password=113w3KbyJ8LkQOP
+      - APP_SECRET=secret
+      - APP_EMAIL_PASSWORD=password
+      - APP_EMAIL_USERNAME=john@gmail.com
+  - name: wordpress-database
+    literals:
+      - DATABASE_HOST=localhost
+      - DATABASE_USERNAME=john
+      - DATABASE_PASSWORD=secret
+      - DATABASE_NAME=sandbox
