@@ -12,8 +12,3 @@ WordPress использует:
 - Создайте экземпляр Cloud SQL для MySQL.
 - Разверните WordPress.
 - Настройте свой блог WordPress.
-
-
-# Labels:
-- domain: soprun.com
-- app: wordpress, database
